@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decidative: Decision intelligence for healthcare</title>
+<meta name="description" content="Decision intelligence for healthcare. Decidative supports the call and never makes it for you.">
+<meta name="theme-color" content="#0057B8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://decidative.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Decidative: Decision intelligence for healthcare">
+<meta property="og:description" content="Supports the call, never makes it for you.">
+<meta property="og:url" content="https://decidative.com/">
+<meta name="twitter:card" content="summary">
+<link rel="preload" href="fonts/BarlowCondensed-700.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/BarlowCondensed-600.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/BarlowCondensed-700.woff2) format('woff2')}
+@font-face{font-family:'Libre Caslon Text';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/LibreCaslonText-400i.woff2) format('woff2')}
+@font-face{font-family:'Libre Caslon Text';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/LibreCaslonText-400.woff2) format('woff2')}
+:root{
+  --blue:#0057B8; --shoal:#2D79CF; --yellow:#FFD500; --ink:#0A2447; --paper:#F4F8FC; --white:#fff;
+  --label:'Barlow Condensed','Arial Narrow',sans-serif;
+  --voice:'Libre Caslon Text',Georgia,serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-color:var(--blue) var(--paper)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.6 var(--voice);-webkit-font-smoothing:antialiased}
+::selection{background:var(--yellow);color:var(--ink)}
+a{color:inherit;text-underline-offset:.25em}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.notes :focus-visible,.cartouche :focus-visible{outline-color:var(--blue)}
+h1,h2,h3{font-family:var(--label);font-weight:700;text-transform:uppercase;margin:0;text-wrap:balance}
+
+/* ---------- Sheet 1: the chart ---------- */
+.sheet{
+  position:relative;overflow:hidden;min-height:100svh;color:var(--white);background-color:var(--blue);
+  padding:36px clamp(30px,4vw,60px) 40px;
+  display:grid;grid-template-columns:minmax(340px,5fr) 7fr;grid-template-rows:auto 1fr;column-gap:clamp(24px,3vw,56px);
+}
+.sheet::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background-image:
+    repeating-linear-gradient(90deg,var(--white) 0 22px,var(--ink) 22px 44px),
+    repeating-linear-gradient(90deg,var(--ink) 0 22px,var(--white) 22px 44px),
+    repeating-linear-gradient(180deg,var(--white) 0 22px,var(--ink) 22px 44px),
+    repeating-linear-gradient(180deg,var(--ink) 0 22px,var(--white) 22px 44px);
+  background-size:100% 10px,100% 10px,10px 100%,10px 100%;
+  background-position:top left,bottom left,top left,top right;
+  background-repeat:no-repeat;
+}
+.sheet::before{content:"";position:absolute;inset:14px;border:2px solid var(--white);pointer-events:none;z-index:3}
+.sheet>*{position:relative;z-index:1}
+.top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:12px}
+.mark{display:inline-flex;align-items:center;gap:12px;font:700 1.5rem/1 var(--label);letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
+.mark svg{width:30px;height:30px}
+.top-cta{font:600 1rem/1 var(--label);letter-spacing:.14em;text-transform:uppercase;padding:12px 16px;background:var(--ink);color:var(--yellow);text-decoration:none;transition:background .25s var(--ease),color .25s var(--ease)}
+.top-cta:hover{background:var(--white);color:var(--ink)}
+
+.cartouche{
+  align-self:center;background:var(--yellow);color:var(--ink);padding:44px 40px 36px;
+  box-shadow:inset 0 0 0 6px var(--yellow),inset 0 0 0 8px var(--ink);
+}
+.cartouche h1{font-size:clamp(2.6rem,4.7vw,4.8rem);line-height:.94;letter-spacing:.01em}
+.voice{font:italic 400 clamp(1.3rem,1.8vw,1.75rem)/1.3 var(--voice);margin:22px 0 30px;max-width:22em}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--ink);color:var(--yellow);font:600 1.125rem/1 var(--label);letter-spacing:.12em;text-transform:uppercase;padding:18px 24px;text-decoration:none;transition:background .25s var(--ease),color .25s var(--ease)}
+.btn svg{width:22px;height:14px;transition:transform .3s var(--ease)}
+.btn:hover{background:var(--blue);color:var(--white)}
+.btn:hover svg{transform:translateX(5px)}
+.btn.on-blue{background:var(--yellow);color:var(--ink)}
+.btn.on-blue:hover{background:var(--white);color:var(--ink)}
+.fine{margin:22px 0 0;font-size:.9375rem;line-height:1.45}
+
+.chart{margin:0;align-self:center;min-width:0}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.sd text{font:italic 400 13px var(--voice);fill:#fff;opacity:.6;text-anchor:middle}
+.hz{font:italic 400 17px var(--voice);fill:#fff}
+.lab{font:600 13px var(--label);letter-spacing:.16em;fill:#fff;text-transform:uppercase}
+.hletter{font:700 50px var(--label);fill:var(--ink)}
+.hname{font:600 14px var(--label);letter-spacing:.14em;fill:var(--ink);text-transform:uppercase}
+.line{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
+.course{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;transition:opacity .3s}
+.set{fill:none;stroke:var(--yellow);stroke-width:8;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;transition:stroke-dashoffset .9s var(--ease),opacity .2s}
+.set.on{stroke-dashoffset:0;opacity:1}
+.chart.chosen .course{opacity:.35}
+.harbour{cursor:pointer}
+@media (prefers-reduced-motion:no-preference){
+  .course{animation:draw 1.6s var(--ease) both}
+  .course:nth-of-type(2){animation-delay:.18s}
+  .course:nth-of-type(3){animation-delay:.36s}
+  @keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+}
+.plotter{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.plot{font:600 1.0625rem/1 var(--label);letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:transparent;border:2px solid var(--white);padding:13px 18px;cursor:pointer;transition:background .2s,color .2s}
+.plot b{font-weight:700;margin-right:10px;font-size:1.25em}
+.plot:hover{background:rgba(255,255,255,.16)}
+.plot[aria-pressed="true"]{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.clear{font:600 1rem/1 var(--label);letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:none;border:0;border-bottom:2px solid var(--yellow);padding:13px 4px;cursor:pointer}
+.clear[hidden]{display:none}
+.note{margin:14px 0 0;font:italic 400 1.1875rem/1.45 var(--voice);min-height:3.8em;max-width:80%}
+
+/* ---------- Sheet 2: legend ---------- */
+.notes{padding:clamp(72px,10vw,140px) clamp(24px,6vw,96px)}
+.notes h2{font-size:clamp(2.6rem,5.4vw,5rem);line-height:.95;max-width:12em}
+.legend{margin:clamp(40px,6vw,80px) 0 0;padding:0;list-style:none;max-width:68rem}
+.legend li{display:grid;grid-template-columns:clamp(96px,14vw,160px) 1fr;gap:clamp(20px,4vw,56px);padding:32px 0;border-top:2px solid var(--ink)}
+.legend li:last-child{border-bottom:2px solid var(--ink)}
+.legend svg{width:100%;height:auto}
+.legend h3{font-size:clamp(1.6rem,2.6vw,2.2rem);line-height:1;letter-spacing:.02em}
+.legend p{margin:12px 0 0;max-width:52ch}
+
+/* ---------- Sheet 3: contact ---------- */
+.contact{background:var(--blue);color:var(--white);padding:clamp(72px,10vw,140px) clamp(24px,6vw,96px)}
+.contact h2{font-size:clamp(2.6rem,5.4vw,5rem);line-height:.95;max-width:13em}
+.contact p{max-width:46ch;margin:24px 0 36px;font-size:1.1875rem}
+.addr{display:block;margin-top:20px;font:italic 400 1rem var(--voice)}
+footer{background:var(--ink);color:var(--white);padding:28px clamp(24px,6vw,96px);display:flex;flex-wrap:wrap;gap:12px 40px;justify-content:space-between;align-items:center;font-size:.9375rem}
+footer .mark{font-size:1.25rem}
+footer i{opacity:.85}
+
+/* ---------- Narrow ---------- */
+@media (max-width:860px){
+  .sheet{grid-template-columns:1fr;grid-template-rows:auto;min-height:0;padding-bottom:48px}
+  .cartouche{padding:32px 24px 28px;margin-top:12px}
+  .chart{margin-top:36px}
+  .sd{display:none}
+  .chart svg{overflow:hidden}
+  .hz{font-size:34px}.lab{font-size:28px}.hletter{font-size:84px}.hname{display:none}
+  .plot{flex:1 1 100%;text-align:left}
+  .note{max-width:none}
+}
+@media (max-width:520px){.top-cta{display:none}}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <header class="top">
+    <a class="mark" href="#top" id="top" aria-label="Decidative home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 L19.5 12.5 L30 16 L19.5 19.5 L16 30 L12.5 19.5 L2 16 L12.5 12.5 Z" fill="#FFD500" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
+      Decidative
+    </a>
+    <a class="top-cta" href="mailto:hello@decidative.com?subject=Chart%20briefing">Request a briefing</a>
+  </header>
+
+  <div class="cartouche">
+    <h1>Decision intelligence for healthcare.</h1>
+    <p class="voice">Supports the call, never makes it for you.</p>
+    <a class="btn" href="mailto:hello@decidative.com?subject=Chart%20briefing">Request a chart briefing
+      <svg viewBox="0 0 22 14" aria-hidden="true"><path d="M0 7h20M14 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    </a>
+    <p class="fine">Three courses are charted. None is recommended. Set one yourself.</p>
+  </div>
+
+  <figure class="chart" id="chart">
+    <svg viewBox="0 0 1000 640" role="img" aria-label="Illustrative nautical chart. From a compass rose marked 'your position', three white courses, A, B and C, run to three harbours on a yellow coast. Course A passes rocks marked 'conflicting evidence'. Course B crosses a shoal marked 'thin evidence'. Course C skirts water marked 'not yet surveyed'.">
+      <!-- shoal band and land -->
+      <path d="M740 -400V0C770 60 740 100 765 150C792 205 750 255 775 305C800 355 760 420 780 470C805 525 775 585 795 640V1100H1400V-400Z" fill="#2D79CF"/>
+      <path d="M740 -400V0C770 60 740 100 765 150C792 205 750 255 775 305C800 355 760 420 780 470C805 525 775 585 795 640V1100" class="line" stroke-dasharray="2 6"/>
+      <path d="M835 -400V0C850 50 815 90 838 140C862 190 826 250 850 300C872 350 830 420 852 470C872 520 846 580 868 640V1100H1400V-400Z" fill="#FFD500" stroke="#0A2447" stroke-width="2"/>
+      <g fill="none" stroke="#0A2447" stroke-width="2" opacity=".35">
+        <path d="M900 20C930 90 960 140 990 150M890 200C930 250 960 330 995 340M900 380C940 420 960 470 995 480M910 560C940 590 960 610 995 620"/>
+      </g>
+      <!-- soundings -->
+      <g class="sd" aria-hidden="true"><text x="273" y="117">12</text><text x="518" y="72">12</text><text x="432" y="242">26</text><text x="82" y="83">12</text><text x="348" y="510">8</text><text x="123" y="159">18</text><text x="501" y="580">6</text><text x="463" y="260">14</text><text x="762" y="57">26</text><text x="674" y="198">26</text><text x="138" y="98">26</text><text x="261" y="503">6</text><text x="509" y="246">26</text><text x="441" y="66">6</text><text x="75" y="149">9</text><text x="540" y="278">21</text><text x="266" y="370">26</text><text x="626" y="435">6</text><text x="424" y="538">6</text><text x="577" y="197">12</text><text x="603" y="362">11</text><text x="551" y="375">8</text><text x="660" y="578">21</text><text x="386" y="415">3</text><text x="76" y="437">3</text><text x="74" y="476">26</text><text x="323" y="535">7</text><text x="162" y="165">11</text><text x="307" y="358">7</text><text x="745" y="430">6</text><text x="417" y="388">21</text><text x="705" y="482">14</text><text x="324" y="261">8</text><text x="187" y="124">11</text><text x="285" y="60">26</text><text x="30" y="118">21</text><text x="49" y="537">8</text><text x="491" y="116">8</text><text x="219" y="231">4</text><text x="303" y="101">6</text><text x="287" y="184">4</text><text x="47" y="582">6</text><text x="426" y="115">11</text><text x="426" y="598">6</text><text x="677" y="434">8</text><text x="155" y="478">6</text></g>
+      <!-- hazards -->
+      <g aria-hidden="true">
+        <ellipse cx="500" cy="312" rx="82" ry="38" class="line" stroke-dasharray="2 6" fill="rgba(255,255,255,.1)"/>
+        <text class="hz" x="500" y="372" text-anchor="middle">thin evidence</text>
+        <g class="line"><path d="M572 178l12 12M584 178l-12 12M604 160l12 12M616 160l-12 12M548 196l12 12M560 196l-12 12"/></g>
+        <text class="hz" x="520" y="104">conflicting evidence</text>
+        <path d="M520 548 L610 566 L680 548 L650 600 L560 604 Z" class="line" stroke-dasharray="2 6"/>
+        <text class="hz" x="600" y="632" text-anchor="middle">not yet surveyed</text>
+      </g>
+      <!-- compass rose: your position -->
+      <g aria-hidden="true">
+        <circle cx="110" cy="330" r="62" class="line"/>
+        <circle cx="110" cy="330" r="48" class="line" stroke-dasharray="1 7"/>
+        <path d="M110 262v-14M110 398v14M42 330h-14M178 330h14" class="line"/>
+        <path d="M110 286l12 44-12 44-12-44Z" fill="#FFD500" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/>
+        <text class="lab" x="110" y="440" text-anchor="middle">Your position</text>
+        <text class="hz" x="110" y="464" text-anchor="middle">the question</text>
+      </g>
+      <!-- courses -->
+      <path class="course" pathLength="1" d="M110 330C300 200 520 120 815 110"/>
+      <path class="course" pathLength="1" d="M110 330C330 330 560 300 822 300"/>
+      <path class="course" pathLength="1" d="M110 330C300 460 560 540 826 500"/>
+      <path class="set" data-c="A" pathLength="1" d="M110 330C300 200 520 120 815 110"/>
+      <path class="set" data-c="B" pathLength="1" d="M110 330C330 330 560 300 822 300"/>
+      <path class="set" data-c="C" pathLength="1" d="M110 330C300 460 560 540 826 500"/>
+      <!-- harbours -->
+      <g class="harbour" data-c="A"><rect x="780" y="60" width="400" height="100" fill="transparent"/><text class="hletter" x="880" y="105">A</text><text class="hname" x="880" y="130">Act now</text></g>
+      <g class="harbour" data-c="B"><rect x="780" y="250" width="400" height="100" fill="transparent"/><text class="hletter" x="880" y="295">B</text><text class="hname" x="880" y="320">Watch and repeat</text></g>
+      <g class="harbour" data-c="C"><rect x="780" y="450" width="400" height="100" fill="transparent"/><text class="hletter" x="880" y="495">C</text><text class="hname" x="880" y="520">Refer on</text></g>
+      <text class="hz" x="24" y="620" style="font-size:14px;opacity:.8">Illustrative chart. Not drawn from clinical data.</text>
+    </svg>
+
+    <div class="plotter" role="group" aria-label="Chart a course">
+      <button class="plot" type="button" data-c="A" aria-pressed="false"><b>A</b>Act now</button>
+      <button class="plot" type="button" data-c="B" aria-pressed="false"><b>B</b>Watch and repeat</button>
+      <button class="plot" type="button" data-c="C" aria-pressed="false"><b>C</b>Refer on</button>
+      <button class="clear" type="button" hidden>Clear course</button>
+    </div>
+    <p class="note" id="note" aria-live="polite">Charted by Decidative. Chosen by you. Pick a harbour to set your course.</p>
+  </figure>
+</div>
+
+<main>
+  <section class="notes" aria-labelledby="notes-h">
+    <h2 id="notes-h">We chart the water. You set the course.</h2>
+    <ul class="legend">
+      <li>
+        <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke="#0A2447" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="32" r="4" fill="#FFD500"/><path d="M12 32C40 14 64 14 90 12M12 32H90M12 32C40 50 64 50 90 52"/></svg>
+        <div><h3>Every reasonable course, on one chart.</h3><p>Options sit side by side. Nothing is tucked away to make one of them look better.</p></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke="#0A2447" stroke-width="2" stroke-linecap="round"><ellipse cx="48" cy="32" rx="42" ry="22" stroke-dasharray="2 6"/><path d="M36 24l12 12M48 24L36 36M54 28l10 10M64 28L54 38"/></svg>
+        <div><h3>Hazards are marked where they are.</h3><p>Thin or conflicting evidence is drawn on the chart, not buried in a footnote.</p></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M6 44C30 44 56 20 90 20" stroke="#FFD500" stroke-width="10"/><path d="M6 44C30 44 56 20 90 20" stroke="#0A2447" stroke-width="2" stroke-dasharray="5 5"/></svg>
+        <div><h3>The course is yours.</h3><p>No auto-selected option, no default route. The decision, and the accountability for it, stay with the clinician.</p></div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Tell us the decision you want charted.</h2>
+    <p>A short conversation is the fastest way to see whether Decidative fits how your clinicians decide.</p>
+    <a class="btn on-blue" href="mailto:hello@decidative.com?subject=Chart%20briefing">Request a chart briefing
+      <svg viewBox="0 0 22 14" aria-hidden="true"><path d="M0 7h20M14 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    </a>
+    <span class="addr">hello@decidative.com</span>
+  </section>
+</main>
+
+<footer>
+  <a class="mark" href="#top" aria-label="Back to top">
+    <svg viewBox="0 0 32 32" aria-hidden="true" width="24" height="24"><path d="M16 2 L19.5 12.5 L30 16 L19.5 19.5 L16 30 L12.5 19.5 L2 16 L12.5 12.5 Z" fill="#FFD500" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
+    Decidative
+  </a>
+  <i>Illustrative chart. Not for clinical navigation.</i>
+  <span>&copy; 2026 Decidative</span>
+</footer>
+
+<script>
+(() => {
+  const chart = document.getElementById('chart');
+  const note = document.getElementById('note');
+  const clear = chart.querySelector('.clear');
+  const text = {
+    none: 'Charted by Decidative. Chosen by you. Pick a harbour to set your course.',
+    A: 'Course A, Act now. The quickest passage, with rocks of conflicting evidence close aboard. Course set by you.',
+    B: 'Course B, Watch and repeat. The straightest line, crossing a shoal of thin evidence. Course set by you.',
+    C: 'Course C, Refer on. The longest passage, through water not yet surveyed. Course set by you.'
+  };
+  function set(c) {
+    chart.classList.toggle('chosen', !!c);
+    chart.querySelectorAll('.set').forEach(p => p.classList.toggle('on', p.dataset.c === c));
+    chart.querySelectorAll('.plot').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.c === c)));
+    clear.hidden = !c;
+    note.textContent = text[c || 'none'];
+  }
+  let current = null;
+  const pick = c => { current = current === c ? null : c; set(current); };
+  chart.querySelectorAll('.plot, .harbour').forEach(el => el.addEventListener('click', () => pick(el.dataset.c)));
+  clear.addEventListener('click', () => { current = null; set(null); });
+})();
+</script>
+</body>
+</html>
