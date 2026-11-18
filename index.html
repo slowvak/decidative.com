@@ -222,10 +222,10 @@ footer i{opacity:.85}
       </li>
       <li>
         <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M6 44C30 44 56 20 90 20" stroke="#FFD500" stroke-width="10"/><path d="M6 44C30 44 56 20 90 20" stroke="#0A2447" stroke-width="2" stroke-dasharray="5 5"/></svg>
-        <div><h3>Small, fast, and yours to override.</h3><p>Compact models answer in a fraction of a second at a fraction of the cost of a general-purpose LLM, so routine questions can be answered before anyone has to ask. The clinician confirms or overrides every answer.</p></div>
+        <div><h3>Small, fast, and yours to override.</h3><p>Compact models answer in a single pass and use a fraction of the energy of a large model, so routine questions can be answered before anyone has to ask. The clinician confirms or overrides every answer.</p></div>
       </li>
     </ul>
-    <p class="proof">In a recent radiology study, a 3-billion-parameter decision model extracted 18 findings from a CT report in about a third of a second, with an AUROC of 0.95. <a href="https://mdsynapse.org/blogposts/the-best-documentation-request-is-the-one-nobody-has-to-make">Read the write-up</a>.</p>
+    <p class="proof">In a zero-shot radiology evaluation on a single workstation, a 3-billion-parameter decision model came within 0.04 AUROC of a 27B one on report findings while using 3 to 9 times less energy per request. Reading a generative model out as a decision model cut calibration error on CT volumes from 0.436 to 0.072. No model won every task, so models and thresholds should be chosen on local cases. <a href="https://arxiv.org/abs/2611.01631">Read the paper</a>.</p>
   </section>
 
   <section class="contact" aria-labelledby="contact-h">
