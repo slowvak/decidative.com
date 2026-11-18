@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Decidative: Decision intelligence for healthcare</title>
-<meta name="description" content="Decision intelligence for healthcare. Decidative supports the call and never makes it for you.">
+<meta name="description" content="Decision intelligence for healthcare. Decision models make healthcare faster and more reliable than generic LLMs, and support the call without making it for you.">
 <meta name="theme-color" content="#0057B8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://decidative.com/">
@@ -110,6 +110,7 @@ h1,h2,h3{font-family:var(--label);font-weight:700;text-transform:uppercase;margi
 .legend svg{width:100%;height:auto}
 .legend h3{font-size:clamp(1.6rem,2.6vw,2.2rem);line-height:1;letter-spacing:.02em}
 .legend p{margin:12px 0 0;max-width:52ch}
+.proof{margin:36px 0 0;max-width:60ch;font-style:italic}
 
 /* ---------- Sheet 3: contact ---------- */
 .contact{background:var(--blue);color:var(--white);padding:clamp(72px,10vw,140px) clamp(24px,6vw,96px)}
@@ -142,20 +143,20 @@ footer i{opacity:.85}
       <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 L19.5 12.5 L30 16 L19.5 19.5 L16 30 L12.5 19.5 L2 16 L12.5 12.5 Z" fill="#FFD500" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
       Decidative
     </a>
-    <a class="top-cta" href="mailto:hello@decidative.com?subject=Chart%20briefing">Request a briefing</a>
+    <a class="top-cta" href="mailto:hello@decidative.com?subject=Briefing">Request a briefing</a>
   </header>
 
   <div class="cartouche">
     <h1>Decision intelligence for healthcare.</h1>
     <p class="voice">Supports the call, never makes it for you.</p>
-    <a class="btn" href="mailto:hello@decidative.com?subject=Chart%20briefing">Request a chart briefing
+    <a class="btn" href="mailto:hello@decidative.com?subject=Briefing">Request a briefing
       <svg viewBox="0 0 22 14" aria-hidden="true"><path d="M0 7h20M14 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
     </a>
-    <p class="fine">Three courses are charted. None is recommended. Set one yourself.</p>
+    <p class="fine">Three options, none recommended. The choice is yours.</p>
   </div>
 
   <figure class="chart" id="chart">
-    <svg viewBox="0 0 1000 640" role="img" aria-label="Illustrative nautical chart. From a compass rose marked 'your position', three white courses, A, B and C, run to three harbours on a yellow coast. Course A passes rocks marked 'conflicting evidence'. Course B crosses a shoal marked 'thin evidence'. Course C skirts water marked 'not yet surveyed'.">
+    <svg viewBox="0 0 1000 640" role="img" aria-label="Illustrative chart. From a compass rose marked 'your position', three white routes, A, B and C, run to three harbours on a yellow coast. Route A passes rocks marked 'conflicting evidence'. Route B crosses a shoal marked 'thin evidence'. Route C skirts water marked 'not yet surveyed'.">
       <!-- shoal band and land -->
       <path d="M740 -400V0C770 60 740 100 765 150C792 205 750 255 775 305C800 355 760 420 780 470C805 525 775 585 795 640V1100H1400V-400Z" fill="#2D79CF"/>
       <path d="M740 -400V0C770 60 740 100 765 150C792 205 750 255 775 305C800 355 760 420 780 470C805 525 775 585 795 640V1100" class="line" stroke-dasharray="2 6"/>
@@ -197,39 +198,40 @@ footer i{opacity:.85}
       <text class="hz" x="24" y="620" style="font-size:14px;opacity:.8">Illustrative chart. Not drawn from clinical data.</text>
     </svg>
 
-    <div class="plotter" role="group" aria-label="Chart a course">
+    <div class="plotter" role="group" aria-label="Choose an option">
       <button class="plot" type="button" data-c="A" aria-pressed="false"><b>A</b>Act now</button>
       <button class="plot" type="button" data-c="B" aria-pressed="false"><b>B</b>Watch and repeat</button>
       <button class="plot" type="button" data-c="C" aria-pressed="false"><b>C</b>Refer on</button>
-      <button class="clear" type="button" hidden>Clear course</button>
+      <button class="clear" type="button" hidden>Clear choice</button>
     </div>
-    <p class="note" id="note" aria-live="polite">Charted by Decidative. Chosen by you. Pick a harbour to set your course.</p>
+    <p class="note" id="note" aria-live="polite">Decision models lay out the options. You make the call. Pick a harbour to try it.</p>
   </figure>
 </div>
 
 <main>
   <section class="notes" aria-labelledby="notes-h">
-    <h2 id="notes-h">We chart the water. You set the course.</h2>
+    <h2 id="notes-h">Generic LLMs talk. Decision models answer.</h2>
     <ul class="legend">
       <li>
         <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke="#0A2447" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="32" r="4" fill="#FFD500"/><path d="M12 32C40 14 64 14 90 12M12 32H90M12 32C40 50 64 50 90 52"/></svg>
-        <div><h3>Every reasonable course, on one chart.</h3><p>Options sit side by side. Nothing is tucked away to make one of them look better.</p></div>
+        <div><h3>Bounded answers, not free text.</h3><p>A decision model is given the question and the allowed answers, and returns a probability for each in a single pass. It cannot wander off or invent an option, which is where much of the risk in generative output lives.</p></div>
       </li>
       <li>
         <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke="#0A2447" stroke-width="2" stroke-linecap="round"><ellipse cx="48" cy="32" rx="42" ry="22" stroke-dasharray="2 6"/><path d="M36 24l12 12M48 24L36 36M54 28l10 10M64 28L54 38"/></svg>
-        <div><h3>Hazards are marked where they are.</h3><p>Thin or conflicting evidence is drawn on the chart, not buried in a footnote.</p></div>
+        <div><h3>Confidence you can see.</h3><p>Calibrated probabilities show where the model is sure and where it is not. Confident answers can be pre-filled. Uncertain ones go to a person, with the evidence attached.</p></div>
       </li>
       <li>
         <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M6 44C30 44 56 20 90 20" stroke="#FFD500" stroke-width="10"/><path d="M6 44C30 44 56 20 90 20" stroke="#0A2447" stroke-width="2" stroke-dasharray="5 5"/></svg>
-        <div><h3>The course is yours.</h3><p>No auto-selected option, no default route. The decision, and the accountability for it, stay with the clinician.</p></div>
+        <div><h3>Small, fast, and yours to override.</h3><p>Compact models answer in a fraction of a second at a fraction of the cost of a general-purpose LLM, so routine questions can be answered before anyone has to ask. The clinician confirms or overrides every answer.</p></div>
       </li>
     </ul>
+    <p class="proof">In a recent radiology study, a 3-billion-parameter decision model extracted 18 findings from a CT report in about a third of a second, with an AUROC of 0.95. <a href="https://mdsynapse.org/blogposts/the-best-documentation-request-is-the-one-nobody-has-to-make">Read the write-up</a>.</p>
   </section>
 
   <section class="contact" aria-labelledby="contact-h">
-    <h2 id="contact-h">Tell us the decision you want charted.</h2>
-    <p>A short conversation is the fastest way to see whether Decidative fits how your clinicians decide.</p>
-    <a class="btn on-blue" href="mailto:hello@decidative.com?subject=Chart%20briefing">Request a chart briefing
+    <h2 id="contact-h">Tell us which decisions slow your clinicians down.</h2>
+    <p>A short conversation is the fastest way to see where decision models can make your workflow faster and more reliable.</p>
+    <a class="btn on-blue" href="mailto:hello@decidative.com?subject=Briefing">Request a briefing
       <svg viewBox="0 0 22 14" aria-hidden="true"><path d="M0 7h20M14 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
     </a>
     <span class="addr">hello@decidative.com</span>
@@ -251,10 +253,10 @@ footer i{opacity:.85}
   const note = document.getElementById('note');
   const clear = chart.querySelector('.clear');
   const text = {
-    none: 'Charted by Decidative. Chosen by you. Pick a harbour to set your course.',
-    A: 'Course A, Act now. The quickest passage, with rocks of conflicting evidence close aboard. Course set by you.',
-    B: 'Course B, Watch and repeat. The straightest line, crossing a shoal of thin evidence. Course set by you.',
-    C: 'Course C, Refer on. The longest passage, through water not yet surveyed. Course set by you.'
+    none: 'Decision models lay out the options. You make the call. Pick a harbour to try it.',
+    A: 'Option A, Act now. The quickest route, though the evidence conflicts. Your call.',
+    B: 'Option B, Watch and repeat. The most direct route, but the evidence is thin. Your call.',
+    C: 'Option C, Refer on. The longest route, through territory not yet studied. Your call.'
   };
   function set(c) {
     chart.classList.toggle('chosen', !!c);
