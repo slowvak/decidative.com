@@ -73,33 +73,20 @@ h1,h2,h3{font-family:var(--label);font-weight:700;text-transform:uppercase;margi
 .btn.on-blue:hover{background:var(--white);color:var(--ink)}
 .fine{margin:22px 0 0;font-size:.9375rem;line-height:1.45}
 
-.chart{margin:0;align-self:center;min-width:0}
-.chart svg{display:block;width:100%;height:auto;overflow:visible}
-.sd text{font:italic 400 13px var(--voice);fill:#fff;opacity:.75;text-anchor:middle}
-.hz{font:italic 400 17px var(--voice);fill:#fff}
-.lab{font:600 13px var(--label);letter-spacing:.16em;fill:#fff;text-transform:uppercase}
-.hletter{font:700 50px var(--label);fill:var(--ink)}
-.hname{font:600 14px var(--label);letter-spacing:.14em;fill:var(--ink);text-transform:uppercase}
-.line{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round}
-.course{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;transition:opacity .3s}
-.set{fill:none;stroke:var(--yellow);stroke-width:8;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;transition:stroke-dashoffset .9s var(--ease),opacity .2s}
-.set.on{stroke-dashoffset:0;opacity:1}
-.chart.chosen .course{opacity:.35}
-.harbour{cursor:pointer}
-@media (prefers-reduced-motion:no-preference){
-  .course{animation:draw 1.6s var(--ease) both}
-  .course:nth-of-type(2){animation-delay:.18s}
-  .course:nth-of-type(3){animation-delay:.36s}
-  @keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
-}
-.plotter{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-.plot{font:600 1.0625rem/1 var(--label);letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:transparent;border:2px solid var(--white);padding:13px 18px;cursor:pointer;transition:background .2s,color .2s}
-.plot b{font-weight:700;margin-right:10px;font-size:1.25em}
-.plot:hover{background:rgba(255,255,255,.16)}
-.plot[aria-pressed="true"]{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
-.clear{font:600 1rem/1 var(--label);letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:none;border:0;border-bottom:2px solid var(--yellow);padding:13px 4px;cursor:pointer}
-.clear[hidden]{display:none}
-.note{margin:14px 0 0;font:italic 400 1.1875rem/1.45 var(--voice);min-height:3.8em;max-width:80%}
+.chart{margin:0;align-self:center;min-width:0;display:grid;grid-template-columns:2fr 3fr;column-gap:8px;align-items:center}
+.docs{width:100%;height:auto}
+.flow{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;opacity:.8}
+@media (prefers-reduced-motion:no-preference){.flow{animation:draw 1.6s var(--ease) both}@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}}
+.summary{background:#fff;color:var(--ink);border:2px solid var(--ink);padding:26px 28px}
+.st{margin:0 0 14px;font:700 1.1rem/1 var(--label);letter-spacing:.16em;text-transform:uppercase}
+.summary ul{margin:0;padding:0;list-style:none}
+.summary li{position:relative;padding:12px 0 12px 26px;border-top:2px solid var(--ink)}
+.summary li::before{content:"";position:absolute;left:0;top:19px;width:10px;height:10px;background:var(--yellow);border:2px solid var(--ink)}
+.summary li.warn{background:var(--yellow);margin:0 -28px;padding-left:54px;padding-right:28px}
+.summary li.warn::before{left:28px;background:var(--ink)}
+.summary b{display:block;font:400 1.2rem/1.3 var(--voice)}
+.summary span{font:italic 400 .95rem var(--voice)}
+.note{grid-column:1/-1;margin:14px 0 0;font:italic 400 1.1875rem/1.45 var(--voice)}
 
 /* ---------- Sheet 2: legend ---------- */
 .notes{padding:clamp(72px,10vw,140px) clamp(24px,6vw,96px)}
@@ -107,7 +94,7 @@ h1,h2,h3{font-family:var(--label);font-weight:700;text-transform:uppercase;margi
 .legend{margin:clamp(40px,6vw,80px) 0 0;padding:0;list-style:none;max-width:68rem}
 .legend li{display:grid;grid-template-columns:clamp(96px,14vw,160px) 1fr;gap:clamp(20px,4vw,56px);padding:32px 0;border-top:2px solid var(--ink)}
 .legend li:last-child{border-bottom:2px solid var(--ink)}
-.legend svg{width:100%;height:auto}
+.legend .n{font:700 clamp(3rem,6vw,5rem)/1 var(--label);color:var(--blue)}
 .legend h3{font-size:clamp(1.6rem,2.6vw,2.2rem);line-height:1;letter-spacing:.02em}
 .legend p{margin:12px 0 0;max-width:52ch}
 .proof{margin:36px 0 0;max-width:60ch;font-style:italic}
@@ -126,11 +113,7 @@ footer i{opacity:.85}
   .sheet{grid-template-columns:1fr;grid-template-rows:auto;min-height:0;padding-bottom:48px}
   .cartouche{padding:32px 24px 28px;margin-top:12px}
   .chart{margin-top:36px}
-  .sd{display:none}
-  .chart svg{overflow:hidden}
-  .hz{font-size:34px}.lab{font-size:28px}.hletter{font-size:84px}.hname{display:none}
-  .plot{flex:1 1 100%;text-align:left}
-  .note{max-width:none}
+  .chart{grid-template-columns:1fr}.docs{display:none}
 }
 @media (max-width:520px){.top-cta{display:none}}
 </style>
@@ -143,95 +126,64 @@ footer i{opacity:.85}
       <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 L19.5 12.5 L30 16 L19.5 19.5 L16 30 L12.5 19.5 L2 16 L12.5 12.5 Z" fill="#FFD500" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
       Decidative
     </a>
-    <a class="top-cta" href="mailto:hello@decidative.com?subject=Briefing">Request a briefing</a>
+    <a class="top-cta" href="mailto:hello@decidative.com?subject=Hello">Get in touch</a>
   </header>
 
   <div class="cartouche">
     <h1>Decision intelligence for healthcare.</h1>
     <p class="voice">Supports the call, never makes it for you.</p>
-    <a class="btn" href="mailto:hello@decidative.com?subject=Briefing">Request a briefing
+    <a class="btn" href="mailto:hello@decidative.com?subject=Hello">Get in touch
       <svg viewBox="0 0 22 14" aria-hidden="true"><path d="M0 7h20M14 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
     </a>
-    <p class="fine">Three options, none recommended. The choice is yours.</p>
+    <p class="fine">Surfacing the diagnoses, procedures, and sensitivities that matter, so nothing important in the history is missed.</p>
   </div>
 
   <figure class="chart" id="chart">
-    <svg viewBox="0 0 1000 640" role="img" aria-label="Illustrative chart. From a compass rose marked 'your position', three white routes, A, B and C, run to three harbours on a yellow coast. Route A passes rocks marked 'conflicting evidence'. Route B crosses a shoal marked 'thin evidence'. Route C skirts water marked 'not yet surveyed'.">
-      <!-- shoal band and land -->
-      <path d="M740 -400V0C770 60 740 100 765 150C792 205 750 255 775 305C800 355 760 420 780 470C805 525 775 585 795 640V1100H1400V-400Z" fill="#2D79CF"/>
-      <path d="M740 -400V0C770 60 740 100 765 150C792 205 750 255 775 305C800 355 760 420 780 470C805 525 775 585 795 640V1100" class="line" stroke-dasharray="2 6"/>
-      <path d="M835 -400V0C850 50 815 90 838 140C862 190 826 250 850 300C872 350 830 420 852 470C872 520 846 580 868 640V1100H1400V-400Z" fill="#FFD500" stroke="#0A2447" stroke-width="2"/>
-      <g fill="none" stroke="#0A2447" stroke-width="2" opacity=".35">
-        <path d="M900 20C930 90 960 140 990 150M890 200C930 250 960 330 995 340M900 380C940 420 960 470 995 480M910 560C940 590 960 610 995 620"/>
-      </g>
-      <!-- soundings -->
-      <g class="sd" aria-hidden="true"><text x="273" y="117">12</text><text x="518" y="72">12</text><text x="432" y="242">26</text><text x="82" y="83">12</text><text x="348" y="510">8</text><text x="123" y="159">18</text><text x="501" y="580">6</text><text x="463" y="260">14</text><text x="762" y="57">26</text><text x="674" y="198">26</text><text x="138" y="98">26</text><text x="261" y="503">6</text><text x="509" y="246">26</text><text x="441" y="66">6</text><text x="75" y="149">9</text><text x="540" y="278">21</text><text x="266" y="370">26</text><text x="626" y="435">6</text><text x="424" y="538">6</text><text x="577" y="197">12</text><text x="603" y="362">11</text><text x="551" y="375">8</text><text x="660" y="578">21</text><text x="386" y="415">3</text><text x="76" y="437">3</text><text x="74" y="476">26</text><text x="323" y="535">7</text><text x="162" y="165">11</text><text x="307" y="358">7</text><text x="745" y="430">6</text><text x="417" y="388">21</text><text x="705" y="482">14</text><text x="324" y="261">8</text><text x="187" y="124">11</text><text x="285" y="60">26</text><text x="30" y="118">21</text><text x="49" y="537">8</text><text x="491" y="116">8</text><text x="219" y="231">4</text><text x="303" y="101">6</text><text x="287" y="184">4</text><text x="47" y="582">6</text><text x="426" y="115">11</text><text x="426" y="598">6</text><text x="677" y="434">8</text><text x="155" y="478">6</text></g>
-      <!-- hazards -->
-      <g aria-hidden="true">
-        <ellipse cx="500" cy="312" rx="82" ry="38" class="line" stroke-dasharray="2 6" fill="rgba(255,255,255,.1)"/>
-        <text class="hz" x="500" y="372" text-anchor="middle">thin evidence</text>
-        <g class="line"><path d="M572 178l12 12M584 178l-12 12M604 160l12 12M616 160l-12 12M548 196l12 12M560 196l-12 12"/></g>
-        <text class="hz" x="520" y="104">conflicting evidence</text>
-        <path d="M520 548 L610 566 L680 548 L650 600 L560 604 Z" class="line" stroke-dasharray="2 6"/>
-        <text class="hz" x="600" y="632" text-anchor="middle">not yet surveyed</text>
-      </g>
-      <!-- compass rose: your position -->
-      <g aria-hidden="true">
-        <circle cx="110" cy="330" r="62" class="line"/>
-        <circle cx="110" cy="330" r="48" class="line" stroke-dasharray="1 7"/>
-        <path d="M110 262v-14M110 398v14M42 330h-14M178 330h14" class="line"/>
-        <path d="M110 286l12 44-12 44-12-44Z" fill="#FFD500" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/>
-        <text class="lab" x="110" y="440" text-anchor="middle">Your position</text>
-        <text class="hz" x="110" y="464" text-anchor="middle">the question</text>
-      </g>
-      <!-- courses -->
-      <path class="course" pathLength="1" d="M110 330C300 200 520 120 815 110"/>
-      <path class="course" pathLength="1" d="M110 330C330 330 560 300 822 300"/>
-      <path class="course" pathLength="1" d="M110 330C300 460 560 540 826 500"/>
-      <path class="set" data-c="A" pathLength="1" d="M110 330C300 200 520 120 815 110"/>
-      <path class="set" data-c="B" pathLength="1" d="M110 330C330 330 560 300 822 300"/>
-      <path class="set" data-c="C" pathLength="1" d="M110 330C300 460 560 540 826 500"/>
-      <!-- harbours -->
-      <g class="harbour" data-c="A"><rect x="780" y="60" width="400" height="100" fill="transparent"/><text class="hletter" x="880" y="105">A</text><text class="hname" x="880" y="130">Act now</text></g>
-      <g class="harbour" data-c="B"><rect x="780" y="250" width="400" height="100" fill="transparent"/><text class="hletter" x="880" y="295">B</text><text class="hname" x="880" y="320">Watch and repeat</text></g>
-      <g class="harbour" data-c="C"><rect x="780" y="450" width="400" height="100" fill="transparent"/><text class="hletter" x="880" y="495">C</text><text class="hname" x="880" y="520">Refer on</text></g>
-      <text class="hz" x="24" y="620" style="font-size:14px;opacity:.8">Illustrative chart. Not drawn from clinical data.</text>
-    </svg>
-
-    <div class="plotter" role="group" aria-label="Choose an option">
-      <button class="plot" type="button" data-c="A" aria-pressed="false"><b>A</b>Act now</button>
-      <button class="plot" type="button" data-c="B" aria-pressed="false"><b>B</b>Watch and repeat</button>
-      <button class="plot" type="button" data-c="C" aria-pressed="false"><b>C</b>Refer on</button>
-      <button class="clear" type="button" hidden>Clear choice</button>
+    <svg class="docs" viewBox="0 0 300 520" aria-hidden="true"><path class="flow" pathLength="1" style="animation-delay:0.00s" d="M58 55C118 55 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:0.12s" d="M148 35C208 35 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:0.24s" d="M238 65C298 65 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:0.36s" d="M78 175C138 175 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:0.48s" d="M188 155C248 155 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:0.60s" d="M273 195C333 195 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:0.72s" d="M63 305C123 305 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:0.84s" d="M158 290C218 290 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:0.96s" d="M253 325C313 325 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:1.08s" d="M83 435C143 435 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:1.20s" d="M183 420C243 420 230 260 300 260"/><path class="flow" pathLength="1" style="animation-delay:1.32s" d="M273 455C333 455 230 260 300 260"/><g transform="translate(20 30)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(110 10)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(200 40)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(40 150)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(150 130)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(235 170)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(25 280)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(120 265)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(215 300)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(45 410)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(145 395)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g><g transform="translate(235 430)"><path d="M0 0H26L38 12V50H0Z" fill="#fff" stroke="#0A2447" stroke-width="2" stroke-linejoin="round"/><path d="M26 0V12H38" fill="none" stroke="#0A2447" stroke-width="2"/><path d="M7 24h22M7 32h22M7 40h14" stroke="#0A2447" stroke-width="2" stroke-linecap="round"/></g></svg>
+    <div class="summary" role="group" aria-label="Example patient summary">
+      <p class="st">Patient summary</p>
+      <ul><li><b>Lt hearing loss</b><span>Mar 8, 2017</span></li><li><b>Cochlear implant, model XYZ</b><span>Jun 10, 2017</span></li><li><b>Progressive DJD, Rt knee</b><span>2016&ndash;2022</span></li><li><b>Rt TKA</b><span>Mar 8, 2022</span></li><li class="warn"><b>CT IV contrast media reaction: serious</b><span>Jan 12, 2023</span></li></ul>
     </div>
-    <p class="note" id="note" aria-live="polite">Decision models lay out the options. You make the call. Pick a harbour to try it.</p>
+    <p class="note">Illustrative example with synthetic data. Many documents, one summary.</p>
   </figure>
 </div>
 
 <main>
   <section class="notes" aria-labelledby="notes-h">
-    <h2 id="notes-h">Generic LLMs talk. Decision models answer.</h2>
-    <ul class="legend">
+    <h2 id="notes-h">Good decisions start with good information.</h2>
+    <ol class="legend">
       <li>
-        <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke="#0A2447" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="32" r="4" fill="#FFD500"/><path d="M12 32C40 14 64 14 90 12M12 32H90M12 32C40 50 64 50 90 52"/></svg>
-        <div><h3>Bounded answers, not free text.</h3><p>A decision model is given the question and the allowed answers, and returns a probability for each in a single pass. It cannot wander off or invent an option, which is where much of the risk in generative output lives.</p></div>
+        <span class="n" aria-hidden="true">1</span>
+        <div><h3>Decisions rest on information.</h3><p>Medicine is about making well-informed decisions.</p></div>
       </li>
       <li>
-        <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke="#0A2447" stroke-width="2" stroke-linecap="round"><ellipse cx="48" cy="32" rx="42" ry="22" stroke-dasharray="2 6"/><path d="M36 24l12 12M48 24L36 36M54 28l10 10M64 28L54 38"/></svg>
-        <div><h3>Confidence you can see.</h3><p>Calibrated probabilities show where the model is sure and where it is not. Confident answers can be pre-filled. Uncertain ones go to a person, with the evidence attached.</p></div>
+        <span class="n" aria-hidden="true">2</span>
+        <div><h3>No one can read every page.</h3><p>It is not feasible for a healthcare provider to thoroughly review and understand every bit of clinical history about a patient. But AI can access all electronic documents and capture critical elements including major diagnoses, procedures, and drug or other sensitivities.</p></div>
       </li>
       <li>
-        <svg viewBox="0 0 96 64" aria-hidden="true" fill="none" stroke-linecap="round"><path d="M6 44C30 44 56 20 90 20" stroke="#FFD500" stroke-width="10"/><path d="M6 44C30 44 56 20 90 20" stroke="#0A2447" stroke-width="2" stroke-dasharray="5 5"/></svg>
-        <div><h3>Small, fast, and yours to override.</h3><p>Compact models answer in a single pass and use a fraction of the energy of a large model, so routine questions can be answered before anyone has to ask. The clinician confirms or overrides every answer.</p></div>
+        <span class="n" aria-hidden="true">3</span>
+        <div><h3>Fluent text is not calibrated confidence.</h3><p>Current LLMs are very good at generating text and are getting better at not hallucinating. However, their confidence is still not well calibrated, and a long paragraph for each diagnosis is overload.</p></div>
       </li>
-    </ul>
+      <li>
+        <span class="n" aria-hidden="true">4</span>
+        <div><h3>Decision models answer specific questions.</h3><p>Decision models can provide well-calibrated answers to specific questions, making history summarization and detection of specific patient properties feasible and much less expensive than LLMs.</p></div>
+      </li>
+      <li>
+        <span class="n" aria-hidden="true">5</span>
+        <div><h3>Subscribe to the most relevant content for YOUR practice. Interactive adjudication of content.</h3><p>Medical summaries must be tailored to your practice&mdash;it&rsquo;s not one-size-fits-all. Further, it is critical not to propagate incorrect information&mdash;sometimes a condition is misdiagnosed, and including that in the summary is dangerous.</p></div>
+      </li>
+      <li>
+        <span class="n" aria-hidden="true">6</span>
+        <div><h3>A deterministic workflow, using both.</h3><p>A deterministic workflow that integrates decision models and LLMs is likely to improve the efficiency and job satisfaction of healthcare providers the most.</p></div>
+      </li>
+    </ol>
     <p class="proof">In a zero-shot radiology evaluation on a single workstation, a 3-billion-parameter decision model came within 0.04 AUROC of a 27B one on report findings while using 3 to 9 times less energy per request. Reading a generative model out as a decision model cut calibration error on CT volumes from 0.436 to 0.072. No model won every task, so models and thresholds should be chosen on local cases. <a href="https://arxiv.org/abs/2611.01631">Read the paper</a>.</p>
   </section>
 
   <section class="contact" aria-labelledby="contact-h">
-    <h2 id="contact-h">Tell us which decisions slow your clinicians down.</h2>
-    <p>A short conversation is the fastest way to see where decision models can make your workflow faster and more reliable.</p>
-    <a class="btn on-blue" href="mailto:hello@decidative.com?subject=Briefing">Request a briefing
+    <h2 id="contact-h">Interested in talking?</h2>
+    <p>If this matches how you think about clinical decisions, we would be glad to hear from you.</p>
+    <a class="btn on-blue" href="mailto:hello@decidative.com?subject=Hello">Get in touch
       <svg viewBox="0 0 22 14" aria-hidden="true"><path d="M0 7h20M14 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
     </a>
     <span class="addr">hello@decidative.com</span>
@@ -243,33 +195,9 @@ footer i{opacity:.85}
     <svg viewBox="0 0 32 32" aria-hidden="true" width="24" height="24"><path d="M16 2 L19.5 12.5 L30 16 L19.5 19.5 L16 30 L12.5 19.5 L2 16 L12.5 12.5 Z" fill="#FFD500" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
     Decidative
   </a>
-  <i>Illustrative chart. Not for clinical navigation.</i>
+  <i>Illustrative example. Synthetic data.</i>
   <span>&copy; 2026 Decidative</span>
 </footer>
 
-<script>
-(() => {
-  const chart = document.getElementById('chart');
-  const note = document.getElementById('note');
-  const clear = chart.querySelector('.clear');
-  const text = {
-    none: 'Decision models lay out the options. You make the call. Pick a harbour to try it.',
-    A: 'Option A, Act now. The quickest route, though the evidence conflicts. Your call.',
-    B: 'Option B, Watch and repeat. The most direct route, but the evidence is thin. Your call.',
-    C: 'Option C, Refer on. The longest route, through territory not yet studied. Your call.'
-  };
-  function set(c) {
-    chart.classList.toggle('chosen', !!c);
-    chart.querySelectorAll('.set').forEach(p => p.classList.toggle('on', p.dataset.c === c));
-    chart.querySelectorAll('.plot').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.c === c)));
-    clear.hidden = !c;
-    note.textContent = text[c || 'none'];
-  }
-  let current = null;
-  const pick = c => { current = current === c ? null : c; set(current); };
-  chart.querySelectorAll('.plot, .harbour').forEach(el => el.addEventListener('click', () => pick(el.dataset.c)));
-  clear.addEventListener('click', () => { current = null; set(null); });
-})();
-</script>
 </body>
 </html>
