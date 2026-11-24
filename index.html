@@ -99,6 +99,14 @@ h1,h2,h3{font-family:var(--label);font-weight:700;text-transform:uppercase;margi
 .legend p{margin:12px 0 0;max-width:52ch}
 .proof{margin:36px 0 0;max-width:60ch;font-style:italic}
 
+/* ---------- How we can help ---------- */
+.help{padding:clamp(72px,10vw,140px) clamp(24px,6vw,96px);border-top:2px solid var(--ink)}
+.help h2{font-size:clamp(2.6rem,5.4vw,5rem);line-height:.95;max-width:12em}
+.help p{max-width:52ch;margin:24px 0 0;font-size:1.1875rem}
+.help ul{margin:32px 0 0;padding-left:1.25em;max-width:52ch;columns:2 18rem;column-gap:48px}
+.help li{margin:0 0 10px;break-inside:avoid}
+.help li::marker{color:var(--blue)}
+
 /* ---------- Sheet 3: contact ---------- */
 .contact{background:var(--blue);color:var(--white);padding:clamp(72px,10vw,140px) clamp(24px,6vw,96px)}
 .contact h2{font-size:clamp(2.6rem,5.4vw,5rem);line-height:.95;max-width:13em}
@@ -178,6 +186,20 @@ footer i{opacity:.85}
       </li>
     </ol>
     <p class="proof">In a zero-shot radiology evaluation on a single workstation, a 3-billion-parameter decision model came within 0.04 AUROC of a 27B one on report findings while using 3 to 9 times less energy per request. Reading a generative model out as a decision model cut calibration error on CT volumes from 0.436 to 0.072. No model won every task, so models and thresholds should be chosen on local cases. <a href="https://arxiv.org/abs/2611.01631">Read the paper</a>.</p>
+  </section>
+
+  <section class="help" aria-labelledby="help-h">
+    <h2 id="help-h">How we can help.</h2>
+    <p>Decidative produces decision models tuned to specific domains and tasks, such as:</p>
+    <ul>
+      <li>Radiology protocolling</li>
+      <li>Image type identification</li>
+      <li>Exam appropriateness</li>
+      <li>Contrast and MRI-safety screening</li>
+      <li>Critical-finding detection</li>
+      <li>Study triage</li>
+      <li>Report-to-order concordance</li>
+    </ul>
   </section>
 
   <section class="contact" aria-labelledby="contact-h">
